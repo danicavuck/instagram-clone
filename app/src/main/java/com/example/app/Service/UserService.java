@@ -14,12 +14,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+
+    public UserService(){}
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public ResponseEntity<?> registerUser(RegisterDTO registerDTO){
 
