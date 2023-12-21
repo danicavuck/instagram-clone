@@ -41,7 +41,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<?> handleUserNotFoundException(UsernameNotFoundException ex, WebRequest request){
 
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(),"User with that username doesn't exist");
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(),"User with that username doesn't exist!");
 
         return new ResponseEntity<Object>(errorResponse, HttpStatus.NOT_FOUND);
     }

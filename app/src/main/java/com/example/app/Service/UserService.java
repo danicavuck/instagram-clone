@@ -14,31 +14,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<?> registerUser(RegisterDTO registerDTO){
+    public UserService(){}
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-        if(userRepository.existsByUsername(registerDTO.getUsername()))
-            return new ResponseEntity<>("User with that username already exists!", HttpStatus.BAD_REQUEST);
-
-        if(userRepository.existsByEmail(registerDTO.getUsername())){
-            return new ResponseEntity<>("User with that email already exists!", HttpStatus.BAD_REQUEST);
-        }
-
-        User user = User.builder().username(registerDTO.getPassword())
-                                    .password(passwordEncoder.encode(registerDTO.getPassword()))
-                                        .email(registerDTO
-                                                .getEmail()).build();
-
-        userRepository.save(user);
-
-        return new ResponseEntity<>("User is registered successfully!", HttpStatus.OK);
-    };
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
 
 
 

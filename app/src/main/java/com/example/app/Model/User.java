@@ -1,15 +1,20 @@
 package com.example.app.Model;
 
-
-import jakarta.persistence.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
+//import javax.persistence.*;
+
+@Entity
 @Builder
 @ToString
-@Entity
 @Data
-@Table(name="user")
+@Table
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -19,13 +24,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="username")
+
     private String username;
 
-    @Column(name="password")
     private String password;
 
-    @Column(name="email")
     private String email;
 
 
