@@ -36,17 +36,16 @@ public class AuthController {
 
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
-    private final CustomAuthManager customAuthManager;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, MyUserDetailsService userDetailsService, UserService userService,
-                          JwtUtil jwtUtil, CustomAuthManager customAuthManager){
+                          JwtUtil jwtUtil){
 
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.myUserDetailsService = userDetailsService;
-        this.customAuthManager = customAuthManager;
+
 
     }
 
@@ -60,8 +59,8 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO){
 
         return switch (myUserDetailsService.register(registerDTO)) {
-            case "VALIDATION_ERROR" -> new ResponseEntity<>("Passwords don't match", HttpStatus.BAD_REQUEST);
-            case "FAILED" -> new ResponseEntity<>("User with that credentials already exists!", HttpStatus.BAD_REQUEST);
+            case "VALIDATION_ERROR" -> new ResponseEntity<>("Data doesn't pass validation", HttpStatus.BAD_REQUEST);
+            case "FAILED" -> new ResponseEntity<>("User with that credentials already exists", HttpStatus.BAD_REQUEST);
             case "SUCCESSES" -> new ResponseEntity<>("User is registered successfully", HttpStatus.OK);
             default -> new ResponseEntity<>("Bad request", HttpStatus.BAD_REQUEST);
         };
@@ -80,17 +79,17 @@ public class AuthController {
             return new ResponseEntity<>(token, HttpStatus.OK);
 
         } else {
-            throw new UsernameNotFoundException("invalid user request !");
+            throw new UsernameNotFoundException("invalid user request ");
         }
 
     }
 
-    @GetMapping("/forgotPassword/{email}")
+    @PutMapping("/forgotPassword/{email}")
     public ResponseEntity<?> forgotPassword(@PathVariable String email){
+        if (!userService.changePassword(email))
+            return new ResponseEntity<>("Password change failed",HttpStatus.BAD_REQUEST);
 
-        User user = userService.getUserByEmail(email);
-
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>("Password is changed", HttpStatus.OK);
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.app.Util;
+package com.example.app.Exception;
 
 public class UserAlreadyExistsException extends RuntimeException {
 

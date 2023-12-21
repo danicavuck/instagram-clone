@@ -16,6 +16,7 @@ public class MyUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
 
     public MyUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -41,7 +42,8 @@ public class MyUserDetailsService implements UserDetailsService {
         if(!Objects.equals(registerDTO.getPassword(), registerDTO.getRepeatedPassword()))
             return "VALIDATION_ERROR";
 
-        //ubaci ovde proveru sifre, regex
+        if (registerDTO.getUsername().contains(" ") || !registerDTO.getPassword().matches(PASSWORD_REGEX))
+            return "VALIDATION_ERROR";
 
         if(!userRepository.existsByEmail(registerDTO.getEmail()) && !userRepository.existsByUsername(registerDTO.getUsername())) {
             User user = User.builder().email(registerDTO.getEmail()).username(registerDTO.getUsername()).build();
@@ -50,6 +52,7 @@ public class MyUserDetailsService implements UserDetailsService {
             return  "SUCCESSES";
         }
     return "FAILED";
+
     }
 
 
