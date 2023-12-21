@@ -27,6 +27,11 @@ public class MyUserDetailsService implements UserDetailsService {
 
         User user = userRepository.findByUsername(username);
 
+        if(user==null){
+            return UserInfoDetails.builder().build();
+        }
+
+
         return UserInfoDetails.builder().name(user.getUsername()).password(user.getPassword()).build();
 
     }

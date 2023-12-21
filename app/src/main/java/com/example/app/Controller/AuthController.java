@@ -32,15 +32,18 @@ import java.security.Principal;
 public class AuthController {
 
     private final MyUserDetailsService myUserDetailsService;
+    private final UserService userService;
+
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final CustomAuthManager customAuthManager;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, MyUserDetailsService userDetailsService,
-                                            JwtUtil jwtUtil,CustomAuthManager customAuthManager){
+    public AuthController(AuthenticationManager authenticationManager, MyUserDetailsService userDetailsService, UserService userService,
+                          JwtUtil jwtUtil, CustomAuthManager customAuthManager){
 
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.myUserDetailsService = userDetailsService;
         this.customAuthManager = customAuthManager;
@@ -80,6 +83,14 @@ public class AuthController {
             throw new UsernameNotFoundException("invalid user request !");
         }
 
+    }
+
+    @GetMapping("/forgotPassword/{email}")
+    public ResponseEntity<?> forgotPassword(@PathVariable String email){
+
+        User user = userService.getUserByEmail(email);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 
