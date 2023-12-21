@@ -1,4 +1,4 @@
-package com.example.app.Util;
+package com.example.app.Exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

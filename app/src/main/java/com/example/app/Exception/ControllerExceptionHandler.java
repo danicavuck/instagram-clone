@@ -1,7 +1,5 @@
-package com.example.app.Util;
+package com.example.app.Exception;
 
-import org.apache.coyote.Response;
-import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.http.*;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
