@@ -2,7 +2,7 @@ package com.example.app.Security;
 
 import com.example.app.DTO.RegisterDTO;
 import com.example.app.Model.User;
-import com.example.app.Repository.UserRepository;
+import com.example.app.Repository.UsersRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,12 +13,12 @@ import java.util.Objects;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UsersRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
 
-    public MyUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public MyUserDetailsService(UsersRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }

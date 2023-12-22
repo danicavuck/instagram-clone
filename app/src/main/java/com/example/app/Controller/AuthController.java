@@ -24,11 +24,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
-
-
-@RestController
-@RequestMapping("/app")
 @CrossOrigin
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
 
     private final MyUserDetailsService myUserDetailsService;

@@ -24,7 +24,6 @@ public class CustomAuthManager implements AuthenticationManager {
     @Override
     public Authentication authenticate(Authentication authentication) {
 
-        System.out.println(authentication.getName());
         UserDetails user = userDetailsService.loadUserByUsername(authentication.getName());
 
         System.out.println(authentication.getCredentials().toString());
